@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eurovision Success Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Eurovision Success Calculator</h2>
+    
+    <form action="/predict" method="POST">
+        <label for="Song_In_English">Is the song in English?</label>
+        <select name="Song_In_English" id="Song_In_English">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select><br><br>
+
+        <label for="Group_Solo">Group or Solo?</label>
+        <select name="Group_Solo" id="Group_Solo">
+            <option value="Solo">Solo</option>
+            <option value="Group">Group</option>
+        </select><br><br>
+        
+        <label for="Artist_gender">Artist Gender:</label>
+        <select name="Artist_gender" id="Artist_gender">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Both">Both/Mixed</option>
+        </select><br><br>
+
+        <label for="Year">Eurovision Year:</label>
+        <input type="number" name="Year" value="2024" required><br><br>
+
+        <label for="danceability">Danceability (0.0 to 1.0):</label>
+        <input type="number" step="0.01" name="danceability" required><br><br>
+
+        <label for="energy">Energy (0.0 to 1.0):</label>
+        <input type="number" step="0.01" name="energy" required><br><br>
+
+        <label for="tempo">Tempo (BPM):</label>
+        <input type="number" step="0.1" name="tempo" value="120.0" required><br><br>
+
+        <label for="loudness">Loudness (dB, e.g., -6.0):</label>
+        <input type="number" step="0.1" name="loudness" value="-6.0" required><br><br>
+
+        <button type="submit">Predict Points</button>
+    </form>
+
+    <h3>{{ prediction_text }}</h3>
+
+    <hr>
+
+    <h2>Historical Voting Best Friend</h2>
+    <form action="/voting_history" method="POST">
+        <label for="country">Select a Country:</label>
+        <select name="country" id="country">
+            {% for country in countries %}
+                <option value="{{ country }}">{{ country }}</option>
+            {% endfor %}
+        </select><br><br>
+        <button type="submit">Find Best Friend</button>
+    </form>
+
+    <h3>{{ voting_text }}</h3>
+</body>
+</html>
